@@ -2,6 +2,8 @@
 
 基于 `socket` 和 `HTTP` 协议，通过 `MVC` 实现的一个简单 web 框架
 
+- 通过读取/更新文件实现数据存取更新
+
 在目录底下，输入
 
     python server.py
