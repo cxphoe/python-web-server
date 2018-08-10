@@ -1,5 +1,7 @@
 # web 框架
 
+<img src="./web_server.gif">
+
 基于 `socket` 和 `HTTP` 协议，通过 `MVC` 实现的一个简单 web 框架：
 
 - M: Mysql ORM

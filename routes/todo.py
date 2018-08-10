@@ -133,7 +133,7 @@ def update(request):
     # todo 项的 id 与当前用户的 id 一样（有权限更新）
     # 才能修改
     if not u.is_guest() and t is not None and u.id == t.user_id:
-        Todo.update(form)
+        Todo.update(t.id, title=form['title'])
 
     return redirect('/todo')
 

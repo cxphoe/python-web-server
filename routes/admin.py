@@ -46,21 +46,21 @@ def users(request):
 
 def users_update(request):
     u = current_user(request)
-    if not u.is_admin():
-        log('<admin:users_update> 重定向到登陆页面')
-        return redirect('/login')
+    # if not u.is_admin():
+    #     log('<admin:users_update> 重定向到登陆页面')
+    #     return redirect('/login')
+    # else:
+    form = request.form()
+    target_id = int(form.get('id', -1))
+    target = User.one(id=target_id)
+    if target is not None:
+        password = form.get('password', '')
+        if len(password) > 2:
+            target.password = password
+        target.update(target_id, password=password)
     else:
-        form = request.form()
-        target_id = int(form.get('id', -1))
-        target = User.one(id=target_id)
-        if target is not None:
-            password = form.get('password', '')
-            if len(password) > 2:
-                target.password = password
-            target.update(target_id, password=password)
-        else:
-            log('<admin:users_update> 没有找到id:{}的用户'.format(form['id']))
-        return redirect('/admin/users')
+        log('<admin:users_update> 没有找到id:{}的用户'.format(form['id']))
+    return redirect('/admin/users')
 
 
 def route_dict():
