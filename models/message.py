@@ -1,4 +1,4 @@
-from models import Model
+from models.old_model import Model
 
 
 class Message(Model):

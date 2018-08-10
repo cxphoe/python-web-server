@@ -1,12 +1,21 @@
-from models import Model
+from models import SQLModel
 from models.user_role import UserRole
 
 
-class User(Model):
+class User(SQLModel):
     """
     User 是一个保存用户数据的 model
     现在只有两个属性 username 和 password
     """
+
+    sql_create = '''
+    CREATE TABLE `user` (
+        `id` INT NOT NULL AUTO_INCREMENT,
+        `username` VARCHAR(45) NOT NULL,
+        `password` CHAR(64) NOT NULL,
+        `role` ENUM('guest', 'normal', 'admin') NOT NULL,
+        PRIMARY KEY (`id`)
+    )'''
 
     def __init__(self, form):
         super().__init__(form)
@@ -20,6 +29,7 @@ class User(Model):
             role=UserRole.guest,
             # role='guest',
             username='【游客】',
+            password='【游客】',
         )
         u = User(form)
         return u
@@ -31,21 +41,22 @@ class User(Model):
         return self.role == UserRole.admin
 
     @classmethod
-    def login_user(cls, form):
-        # for 循环版本
-        # us = User.all()
-        # for u in us:
-        #     if u.username == self.username and u.password == self.password:
-        #         return True
-        # return False
-        # find_by 版本
-        u = User.find_by(username=form['username'], password=form['password'])
-        return u
-        # return u is not None and u.password == self.password
-        # u = User.find_by(username=self.username)
-        # 不应该用下面的隐式转换
-        # return u and u.password == self.password
+    def login(cls, form):
+        u = User.one(username=form['username'], password=form['password'])
+        if u is not None:
+            result = '登录成功'
+            return u, result
+        else:
+            result = '用户名或者密码错误'
+            return User.guest(), result
 
-
-    def validate_register(self):
-        return len(self.username) > 2 and len(self.password) > 2
+    @classmethod
+    def register(cls, form):
+        valid = len(form['username']) > 2 and len(form['password']) > 2
+        if valid:
+            u = User.new(form)
+            result = '注册成功<br> <pre>{}</pre>'.format(User.all())
+            return u, result
+        else:
+            result = '用户名或者密码长度必须大于2'
+            return User.guest(), result

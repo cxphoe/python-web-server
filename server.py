@@ -1,20 +1,19 @@
 import _thread
 import socket
 import urllib.parse
-import _thread
 
 from utils import log
 
-from routes import (
+from models import SQLModel
+
+from routes.index import (
     error,
-    route_static,
-    route_dict,
-    login_required,
 )
 
 # 用 from import as 来避免重名
-from routes_todo import route_dict as routes_todo
-from routes_admin import route_dict as routes_admin
+from routes.index import route_dict as routes_index
+from routes.todo import route_dict as routes_todo
+from routes.admin import route_dict as routes_admin
 
 
 # 定义一个 class 用于保存请求的数据
@@ -95,7 +94,7 @@ def response_for_path(request):
     没有处理的 path 会返回 404
     """
     # 注册外部的路由
-    r = route_dict()
+    r = routes_index()
     r.update(routes_todo())
     r.update(routes_admin())
     response = r.get(request.path, error)
@@ -123,6 +122,7 @@ def run(host, port):
     # 初始化 socket 套路
     # 使用 with 可以保证程序中断的时候正确关闭 socket 释放占用的端口
     log('开始运行于', 'http://{}:{}'.format(host, port))
+    SQLModel.init_db()
     with socket.socket() as s:
         s.bind((host, port))
         # 无限循环来处理请求

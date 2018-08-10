@@ -6,7 +6,8 @@ from routes import (
     template,
     current_user,
     response_with_headers,
-    login_required)
+    login_required
+)
 from utils import log
 
 
@@ -20,8 +21,7 @@ def index(request):
     """
     todo 首页的路由函数
     """
-    u = current_user(request)
-    todos = Todo.find_all(user_id=u.id)
+    todos = Todo.all()
     # todos = Todo.all()
 
     # 下面这行生成一个 html 字符串
@@ -78,13 +78,8 @@ def add(request):
     用于增加新 todo 的路由函数
     """
     form = request.form()
-
-    t = Todo.new(form)
     u = current_user(request)
-    t.user_id = u.id
-    # 在 save 之前更新时间
-    t.created_time = t.updated_time = int(time.time())
-    t.save()
+    Todo.add(form, u.id or -1)
 
     # 浏览器发送数据过来被处理后, 重定向到首页
     # 浏览器在请求新首页的时候, 就能看到新增的数据了
@@ -99,7 +94,7 @@ def delete(request):
 
 def edit(request):
     todo_id = int(request.query['id'])
-    t = Todo.find_by(id=todo_id)
+    t = Todo.one(id=todo_id)
 
     u = current_user(request)
     # 只有在当前用户不是游客，且
@@ -132,7 +127,7 @@ def update(request):
     """
     form = request.form()
     u = current_user(request)
-    t = Todo.find_by(id=int(form['id']))
+    t = Todo.one(id=int(form['id']))
     # 只有在当前用户不是游客，且
     # form 里面的 id 有对应的 todo 项，且
     # todo 项的 id 与当前用户的 id 一样（有权限更新）

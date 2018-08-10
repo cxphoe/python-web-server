@@ -4,7 +4,8 @@ from routes import (
     template,
     current_user,
     response_with_headers,
-    login_required)
+    login_required
+)
 from utils import log
 from models.user import User
 
@@ -51,12 +52,12 @@ def users_update(request):
     else:
         form = request.form()
         target_id = int(form.get('id', -1))
-        target = User.find_by(id=target_id)
+        target = User.one(id=target_id)
         if target is not None:
             password = form.get('password', '')
             if len(password) > 2:
                 target.password = password
-            target.save()
+            target.update(target_id, password=password)
         else:
             log('<admin:users_update> 没有找到id:{}的用户'.format(form['id']))
         return redirect('/admin/users')
