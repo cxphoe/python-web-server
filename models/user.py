@@ -1,62 +1,43 @@
-from models import SQLModel
-from models.user_role import UserRole
+from models import Model
+from utils import log
+import hashlib
 
-
-class User(SQLModel):
+class User(Model):
     """
     User 是一个保存用户数据的 model
     现在只有两个属性 username 和 password
     """
 
-    sql_create = '''
-    CREATE TABLE `user` (
-        `id` INT NOT NULL AUTO_INCREMENT,
-        `username` VARCHAR(45) NOT NULL,
-        `password` CHAR(64) NOT NULL,
-        `role` ENUM('guest', 'normal', 'admin') NOT NULL,
-        PRIMARY KEY (`id`)
-    )'''
-
     def __init__(self, form):
         super().__init__(form)
         self.username = form.get('username', '')
         self.password = form.get('password', '')
-        self.role = form.get('role', UserRole.normal)
 
     @staticmethod
-    def guest():
-        form = dict(
-            role=UserRole.guest,
-            # role='guest',
-            username='【游客】',
-            password='【游客】',
-        )
-        u = User(form)
-        return u
-
-    def is_guest(self):
-        return self.role == UserRole.guest
-
-    def is_admin(self):
-        return self.role == UserRole.admin
+    def salted_password(password, salt=')(*&^%'):
+        """
+        密码加盐
+        """
+        salted = password + salt
+        hash = hashlib.sha256(salted.encode('ascii')).hexdigest()
+        return hash
 
     @classmethod
     def login(cls, form):
-        u = User.one(username=form['username'], password=form['password'])
+        u = User.find_by(username=form['username'], password=cls.salted_password(form['password']))
         if u is not None:
-            result = '登录成功'
-            return u, result
+            return u
         else:
-            result = '用户名或者密码错误'
-            return User.guest(), result
+            return None
 
     @classmethod
     def register(cls, form):
         valid = len(form['username']) > 2 and len(form['password']) > 2
         if valid:
+            form['password'] = cls.salted_password(form['password'])
             u = User.new(form)
-            result = '注册成功<br> <pre>{}</pre>'.format(User.all())
+            result = '注册成功'
             return u, result
         else:
             result = '用户名或者密码长度必须大于2'
-            return User.guest(), result
+            return None, result

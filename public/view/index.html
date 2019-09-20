@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/main.css">
+</head>
+<body>
+    <main id="main">
+        <nav class="main-nav">
+            <span class="links">
+                <a class="signin active">登录</a>
+                <a class="signup">注册</a>
+                <a class="logout" style="display: none">登出</a>
+                <a class="todo">Todo</a>
+            </span>
+            <span>Hi, <span id="username">游客</span></span>
+        </nav>
+        <fieldset class="signin-form passport-form hide">
+            <legend>登录</legend>
+            <input class="name-input" name="username" placeholder="输入用户名">
+            <input class="password-input" type="password" name="password" placeholder="输入密码">
+            <div class="extra-op">
+                <a class="to-signup">去注册</a>
+            </div>
+            <a type="submit" class="pure-button pure-button-primary signin">登录</a>
+        </fieldset>
+
+        <fieldset class="signup-form passport-form hide">
+            <legend>注册</legend>
+            <input class="name-input" name="username" placeholder="输入用户名">
+            <input class="password-input" type="password" name="password" placeholder="输入密码">
+            <input class="recheck-input" type="password" name="password" placeholder="确认密码">
+            <div class="extra-op">
+                <a class="to-signin">去登录</a>
+            </div>
+            <a type="submit" class="pure-button pure-button-primary signup">注册</a>
+        </fieldset>
+
+        <table class="pure-table todo-list-ctn hide" id="todo-list">
+            <thead>
+                <tr>
+                    <th>TODO List</th>
+                </tr>
+            </thead>
+
+            <tbody id="todo-items">
+            </tbody>
+            <tbody>
+                <tr>
+                    <td class="add-todo">
+                        <i class="rs-icon add">&#xe664;</i>
+                        <input class="add-todo-input" placeholder="创建新Todo"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script src="/static/common.js"></script>
+    <script src="/static/event_emitter.js"></script>
+    <script src="/static/apis.js"></script>
+    <script src="/static/form.js"></script>
+    <script src="/static/todo_table.js"></script>
+    <script src="/static/main.js"></script>
+</body>
+</html>

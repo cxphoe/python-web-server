@@ -1,0 +1,201 @@
+
+@font-face {
+    font-family: 'rsfont';  /* project id 1412786 */
+    src: url('//at.alicdn.com/t/font_1412786_alw207u0ni8.eot');
+    src: url('//at.alicdn.com/t/font_1412786_alw207u0ni8.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_1412786_alw207u0ni8.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_1412786_alw207u0ni8.woff') format('woff'),
+    url('//at.alicdn.com/t/font_1412786_alw207u0ni8.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_1412786_alw207u0ni8.svg#rsfont') format('svg');
+}
+
+.rs-icon {
+    font-family: 'rsfont';
+    font-style: normal;
+    display: inline-block;
+}
+
+
+body {
+    text-align: center;
+}
+
+#main {
+    display: inline-block;
+    margin: 100px auto 0;
+    width: 800px;
+}
+
+#main .main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 0 0 8px;
+    margin-bottom: 16px;
+}
+
+#main .main-nav .links a {
+    color: #1890ff;
+    cursor: pointer;
+    display: inline-block;
+    border-radius: 4px;
+    padding: 8px;
+    user-select: none;
+}
+
+#main .main-nav .links a.active {
+    background: #eee !important;
+}
+
+#main .main-nav .links a:hover {
+    background: #eee;
+}
+
+#main .passport-form {
+    padding: 32px 24px 16px;
+    width: 400px;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box;
+    margin: auto;
+}
+
+#main .passport-form.hide, #main .todo-list-ctn.hide {
+    display: none;
+}
+
+#main .passport-form legend {
+    padding: 0 16px;
+}
+
+#main .passport-form input {
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    font-size: 14px;
+    width: calc(100% - 32px);
+}
+
+#main .passport-form .extra-op {
+    margin-bottom: 16px;
+    text-align: right;
+}
+
+#main .passport-form .extra-op a {
+    cursor: pointer;
+    color: #1890ff;
+    font-size: 12px;
+}
+
+#main .todo-list-ctn {
+    min-width: 600px;
+    margin-top: 8px;
+    margin: auto;
+}
+
+#main .todo-list-ctn thead tr {
+    text-align: center;
+}
+
+#main .todo-list-ctn tbody td {
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+#main .todo-list-ctn .add-todo .add {
+    color: #fff;
+    background: #1890ff;
+    border-radius: 4px;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+#todo-items .edit-todo {
+    display: flex;
+    align-items: center;
+}
+#todo-items .btn {
+    font-size: 12px;
+    color: #fff;
+    background: #1890ff;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+#todo-items td .todo-info {
+    height: 28px;
+}
+
+#todo-items td.editable .operation, #todo-items td .operation.hide {
+    display: none;
+}
+
+#todo-items td.editable .content {
+    display: none;
+}
+
+#todo-items td.editable .edit-todo {
+    display: flex;
+}
+
+#todo-items td .edit-todo {
+    display: none;
+}
+
+#main .todo-list-ctn .check-todo {
+    border: 1px solid #ccc;
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    line-height: 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    margin-right: 4px;
+    color: #fff;
+}
+
+#main .todo-list-ctn .checked .content {
+    position: relative;
+    color: #aaa;
+}
+
+#main .todo-list-ctn .checked .check-todo {
+    color: #666;
+}
+
+#main .todo-list-ctn .checked .content:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    border-top: 1px solid #aaa;
+    width: 110%;
+    left: -5%;
+}
+
+#main .todo-list-ctn .add-todo .add:hover {
+    background: #0c76d8
+}
+
+#main .todo-list-ctn .add-todo input {
+    padding: 0 8px;
+}
+
+
+#main input:focus {
+    outline: 0;
+    background: #fff;
+}
